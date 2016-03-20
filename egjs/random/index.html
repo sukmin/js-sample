@@ -25,7 +25,7 @@ var Random = eg.Class({
 		return Math.floor((Math.random() * 1000) + 1);
 	},
 	_bindEvents : function(){
-		this.$clickElement.clicnk(jQuery.proxy(this._onClicks,this));
+		this.$clickElement.click(jQuery.proxy(this._onClick,this));
 	},
 	_drawNumber : function(nRandomNumber){
 		this.$drawElement.html(nRandomNumber);
