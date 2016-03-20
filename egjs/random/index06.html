@@ -29,7 +29,7 @@ var RandomPainter = eg.Class.extend(eg.Component,{
 		this._bindEvents();
 	},
 	_generateNumber : function(){
-		// 1 ~ 1000사이의 랜덤값 return
+		// 1 ~ max사이의 랜덤값 return
 		return Math.floor((Math.random() * this.options.max) + 1);
 	},
 	_bindEvents : function(){
@@ -45,7 +45,8 @@ var RandomPainter = eg.Class.extend(eg.Component,{
 
 		this.trigger("drawComplete",{ // 리터럴 객체로 만들어 쓰는 사람 입장에서 편하도록 더 많은 정보를 넘겨주자.
 			eventType : "drawComplete",
-			randomValue : nRandom
+			randomValue : nRandom,
+			date : new Date().toString()
 		}); 
 	},
 	_onClick : function(event){
@@ -60,7 +61,7 @@ var oRandomPainter = new RandomPainter("#a_random","#span_random",{
 	max : 9999
 });
 oRandomPainter.on("drawComplete",function(eRandom){ // 이벤트 핸들러 추가
-	alert(eRandom.eventType + " : " + eRandom.randomValue);
+	alert("eventType : " + eRandom.eventType + "\nrandomValue: " + eRandom.randomValue + "\ndate: " + eRandom.date);
 });
 </script>
 </body>

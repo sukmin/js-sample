@@ -34,7 +34,7 @@ var RandomPainter = eg.Class.extend(eg.Component,{
 		this._bindEvents();
 	},
 	_generateNumber : function(){
-		// 1 ~ 1000사이의 랜덤값 return
+		// 1 ~ max사이의 랜덤값 return
 		return Math.floor((Math.random() * this.options.max) + 1);
 	},
 	_bindEvents : function(){
