@@ -24,6 +24,7 @@ var RandomPainter = eg.Class.extend(eg.Component,{
 
 		// 이벤트를 여기에 기술
 		this._htEvent = {
+			drawStart : "drawStart",
 			drawComplete : "drawComplete"
 		}
 
@@ -46,6 +47,11 @@ var RandomPainter = eg.Class.extend(eg.Component,{
 		this.$clickElement.click($.proxy(this._onClick,this));
 	},
 	_draw : function(nRandom){
+
+		this._triggerEvent(this._htEvent.drawStart,{
+			randomValue : nRandom
+		}); 
+
 		this.$drawElement.html(nRandom);
 
 		this._triggerEvent(this._htEvent.drawComplete,{ // 리터럴 객체로 만들어 쓰는 사람 입장에서 편하도록 더 많은 정보를 넘겨주자.
@@ -68,6 +74,9 @@ var RandomPainter = eg.Class.extend(eg.Component,{
 // new를 이용해 인스턴스 생성.
 var oRandomPainter = new RandomPainter("#a_random","#span_random",{
 	max : 9999
+});
+oRandomPainter.on("drawStart",function(eRandom){ // 이벤트 핸들러 추가
+	alert("eventType : " + eRandom.eventType + "\nrandomValue: " + eRandom.randomValue + "\ndate: " + eRandom.date);
 });
 oRandomPainter.on("drawComplete",function(eRandom){ // 이벤트 핸들러 추가
 	alert("eventType : " + eRandom.eventType + "\nrandomValue: " + eRandom.randomValue + "\ndate: " + eRandom.date);
