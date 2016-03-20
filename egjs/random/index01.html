@@ -15,28 +15,38 @@
 <script type="text/javascript" src="http://sukmin.github.io/js-sample/lib/eg.pkgd.min.js"></script>
 <script type="text/javascript">
 var Random = eg.Class({
+
+	//생성자. egjs에서는 이렇게 construct 라는 리터럴 객체 프로퍼티를 만들면 생성자 역할을 한다.
 	construct : function(clickElement,drawElement){
-		this.$clickElement = jQuery(clickElement);
+		// clickElement,drawElement 는 jQuery셀렉터문자열, document.getBy..로 얻은 element, jQuery레퍼런스일 수 있으므로 jQuery(element)로 감싸자
+		this.$clickElement = jQuery(clickElement); //jQuery 레퍼런스를 들고 있는다. 이때 접두사로 $ 사용
 		this.$drawElement = jQuery(drawElement);
 
 		this._bindEvents();
 	},
 	_generateNumber : function(){
+		// 1 ~ 1000사이의 랜덤값 return
 		return Math.floor((Math.random() * 1000) + 1);
 	},
 	_bindEvents : function(){
+		/*
+		* jQuery의 event콜백 안에서 this는 기본적으로 실제 이벤트를 발생시킨 element인데,
+		* 우리는 Random 인스턴스가 this이길 원하므로 jQuery.proxy로 한번 감싸주자.
+		* ie구버전에서 Function.prototype.bind가 없으므로 jQuery.proxy 사용 ( http://kangax.github.io/compat-table/es5/ )
+		*/
 		this.$clickElement.click(jQuery.proxy(this._onClick,this));
 	},
-	_drawNumber : function(nRandomNumber){
+	_draw : function(nRandomNumber){
 		this.$drawElement.html(nRandomNumber);
 	},
 	_onClick : function(event){
-		event.preventDefault();
+		event.preventDefault(); // 클릭으로 동작하는 기본이벤트동작(앵커효과) 제거
 		var nRandomNumber = this._generateNumber();
-		this._drawNumber(nRandomNumber);
+		this._draw(nRandomNumber);
 	}
 });
 
+// new를 이용해 인스턴스 생성.
 var oRandom = new Random("#a_random","#span_random");	
 </script>
 </body>
